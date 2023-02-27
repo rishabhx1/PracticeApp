@@ -34,21 +34,21 @@
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/next"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/prev"
         android:text="Next"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/prev"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button2"
+        app:layout_constraintEnd_toStartOf="@id/next"
         android:text="PREVIOUS"/>
 
 
