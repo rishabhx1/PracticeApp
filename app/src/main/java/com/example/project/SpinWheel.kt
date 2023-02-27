@@ -1,8 +1,8 @@
 package com.example.project
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Im
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
@@ -11,9 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import java.util.Random
-import kotlin.text.Typography.degree
 
-class MainActivity : AppCompatActivity() {
+class SpinWheel : AppCompatActivity() {
 
     private val points = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
     private val pointRange = arrayOfNulls<Int>(points.size)
@@ -26,12 +25,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_spin_wheel)
 
         getPointRangeOnWheel()
 
         val button: Button = findViewById(R.id.button)
         val textView: TextView = findViewById(R.id.chances)
+        val nextBt: Button = findViewById(R.id.next_screen)
+
         textView.text = "$chances CHANCES LEFT"
         wheel = findViewById(R.id.imageView)
         wheel.rotation = -15f
@@ -44,9 +45,14 @@ class MainActivity : AppCompatActivity() {
                     chances--
                     textView.text = "$chances CHANCES LEFT"
                 } else {
-                    Toast.makeText(this@MainActivity, "No more chances!!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SpinWheel, "No more chances!!", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+
+        nextBt.setOnClickListener() {
+            val intent = Intent(this, ScratchCard::class.java)
+            startActivity(intent)
         }
     }
 
@@ -65,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationStart(animation: Animation?) {}
 
             override fun onAnimationEnd(animation: Animation?) {
-                Toast.makeText(this@MainActivity, points[points.size - (degree + 1)], Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SpinWheel, points[points.size - (degree + 1)], Toast.LENGTH_SHORT).show()
                 isSpinning = false
             }
 
