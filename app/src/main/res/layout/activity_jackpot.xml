@@ -24,6 +24,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/seven" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/orange" />
     </ViewFlipper>
 
     <ViewFlipper
@@ -43,6 +47,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/seven" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/orange" />
     </ViewFlipper>
 
     <ViewFlipper
@@ -63,8 +71,24 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/seven" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/orange" />
     </ViewFlipper>
 
+    <TextView
+        android:id="@+id/jck_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/go_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/middle"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/white" />
     <Button
         android:id="@+id/go_btn"
         android:layout_width="wrap_content"
@@ -74,5 +98,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/middle"
         android:text="GO!"/>
+
+    <Button
+        android:id="@+id/prevbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PREV"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
