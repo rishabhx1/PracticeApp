@@ -1,6 +1,7 @@
 package com.example.project
 
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,42 +9,24 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ViewFlipper
-import androidx.appcompat.app.AppCompatActivity
 import kotlin.random.Random
 
 class Jackpot : AppCompatActivity() {
 
     private val random: Random = Random
-    private lateinit var txtView: TextView
-    private lateinit var resTxt: TextView
-
-    private val sharedPreferences: SharedPreferences by lazy {
-        getSharedPreferences("ChancesLeft", MODE_PRIVATE)
-    }
-
-    private val left: ViewFlipper by lazy {
-        findViewById(R.id.left)
-    }
-
-    private val middle: ViewFlipper by lazy {
-        findViewById(R.id.middle)
-    }
-
-    private val right: ViewFlipper by lazy {
-        findViewById(R.id.right)
-    }
-
-    private var chances: Int = -1
+    private var chances = 3
+    private lateinit var txtView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jackpot)
 
-        chances = sharedPreferences.getInt("chances", 3)
-        val button: Button = findViewById(R.id.go_btn)
+        val left : ViewFlipper = findViewById(R.id.left)
+        val middle : ViewFlipper = findViewById(R.id.middle)
+        val right : ViewFlipper = findViewById(R.id.right)
+        val button : Button = findViewById(R.id.go_btn)
         txtView = findViewById(R.id.jck_textview)
-        resTxt = findViewById(R.id.res_text)
-        val prevbt: Button = findViewById(R.id.prevbt)
+        val prevbt : Button = findViewById(R.id.prevbt)
 
         left.setInAnimation(this, R.anim.slide_in_from_top)
 
@@ -53,16 +36,27 @@ class Jackpot : AppCompatActivity() {
 
         txtView.text = "$chances CHANCES LEFT"
 
-        button.setOnClickListener {
-            if (!left.isFlipping && !middle.isFlipping && !right.isFlipping) {
-                if (chances > 0) {
-                    startFlipping(left)
-                    startFlipping(middle)
-                    startFlipping(right)
+        button.setOnClickListener() {
+            if(!left.isFlipping && !middle.isFlipping && !right.isFlipping) {
+                if(chances > 0) {
+                    left.flipInterval = random.nextInt(4, 8) * 50
+                    left.startFlipping()
 
-                    stopFlipping(left)
-                    stopFlipping(middle)
-                    stopFlipping(right)
+                    middle.flipInterval = random.nextInt(4, 8) * 50
+                    middle.startFlipping()
+
+                    right.flipInterval = random.nextInt(4, 8) * 50
+                    right.startFlipping()
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        left.stopFlipping()
+                    }, random.nextLong(6,10) * 500)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        middle.stopFlipping()
+                    }, random.nextLong(6,10) * 500)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        right.stopFlipping()
+                    }, random.nextLong(6,10) * 500)
 
                     chances--
                     txtView.text = "$chances CHANCES LEFT"
@@ -72,32 +66,21 @@ class Jackpot : AppCompatActivity() {
             }
         }
 
-        prevbt.setOnClickListener {
+        prevbt.setOnClickListener() {
             finish()
         }
     }
-
-    private fun stopFlipping(viewFlipper: ViewFlipper) {
-        val time = random.nextLong(6, 10) * 500
-        Handler(Looper.getMainLooper()).postDelayed({
-            viewFlipper.stopFlipping()
-            if (!left.isFlipping && !middle.isFlipping && !right.isFlipping) {
-                if(left.displayedChild == middle.displayedChild && left.displayedChild == right.displayedChild) {
-                    resTxt.text = "JACKPOT"
-                }
-            }
-        }, time)
-    }
-
-    private fun startFlipping(viewFlipper: ViewFlipper) {
-        viewFlipper.flipInterval = random.nextInt(4, 8) * 50
-        viewFlipper.startFlipping()
-    }
-
-    override fun onStop() {
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+    override fun onPause() {
+        super.onPause()
+        val sharedPreferences : SharedPreferences = getSharedPreferences("ChancesLeft", MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences.edit()
         editor.putInt("chances", chances)
         editor.apply()
-        super.onStop()
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        val sharedPreferences : SharedPreferences = getSharedPreferences("ChancesLeft", MODE_PRIVATE)
+//        chances = sharedPreferences.getInt("chances", 3)
+//    }
 }
