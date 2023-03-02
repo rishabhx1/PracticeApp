@@ -40,7 +40,8 @@
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/chances"
@@ -51,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:fontFamily="sans-serif-black"
         android:textSize="24sp"/>
 
